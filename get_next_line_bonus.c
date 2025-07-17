@@ -84,12 +84,12 @@ char *get_line(char *backup)
 		return (NULL);
 	i = 0;
 	while (backup[i] && backup[i] != '\n')
+		line[i++] = backup[i];
+	if (backup[i] == '\n')
 	{
 		line[i] = backup[i];
 		i++;
 	}
-	if (backup[i++] == '\n')
-		line[i] = backup[i];
 	line[i] = '\0';
 	return (line);
 }
@@ -113,28 +113,3 @@ char *get_next_line(int fd)
 }
 
 
-
-
-#include <stdio.h>
-
-
-int main(void)
-{
-    int fd = open("test.txt", O_RDONLY);
-    if (fd < 0)
-    {
-        perror("File opening failed");
-        return 1;
-    }
-
-    char *line;
-
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        printf("%s", line);
-        free(line);
-    }
-
-    close(fd);
-    return 0;
-}
